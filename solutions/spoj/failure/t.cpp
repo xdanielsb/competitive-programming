@@ -1,3 +1,6 @@
+/*
+ * author: xdanielsb
+ */
 #include <bits/stdc++.h>
 #define endl '\n'
 #define debug1( x ) cout << #x << " = " <<  x << endl;
