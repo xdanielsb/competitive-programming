@@ -19,6 +19,8 @@ typedef pair<int, int> ii;
 typedef vector<int> vi;
 
 
+const lf EPS = 1e-9;
+
 
 struct point{
   int id;
@@ -41,13 +43,21 @@ struct knode{
   }
 };
 
-bool cmp1( const point &p1, const point &p2){
-  return p1.x[0] < p2.x[0];
-}
-
-bool cmp2( const point &p1, const point &p2){
-  return p1.x[1] < p2.x[1];
-}
+struct cmp{
+  int d;
+  cmp ( int _d){
+    d = _d;
+  }
+  bool operator()( const point &p1, const point &p2){
+    rep( i, 0, 2){
+      int cc;
+      cc =   i == 0? d: i-1;
+      if( abs(p1.x[cc] - p2.x[cc]) > EPS){
+        return p1.x[cc] < p2.x[cc];
+      }
+    }
+  }
+};
 
 knode* build( vector<point> &A,int l, int r, int d){
   knode *root = new knode( d );
@@ -55,16 +65,12 @@ knode* build( vector<point> &A,int l, int r, int d){
     root->p = A[l];
     return root;
   }
-  int mid = (l+r)/2;
-  if( d == 0){
-    nth_element(A.begin()+l, A.begin()+mid,A.begin()+r+1, cmp1);
-  }else{
-    nth_element(A.begin()+l, A.begin()+mid,A.begin()+r+1, cmp2);
-  }
+  int mid = r + (l-r)/2;
+  nth_element(A.begin()+l, A.begin()+mid,A.begin()+r+1, cmp(d));
   root->val = A[mid].x[d];
   root->p = A[mid];
   root->d = d;
-  root->l = build( A, l, mid, d^1);
+  root->l = build( A, l, mid-1, d^1);
   root->r =  build( A, mid+1, r, d^1);
   return root;
 }
@@ -72,14 +78,12 @@ knode* build( vector<point> &A,int l, int r, int d){
 inline lf dist( const point &a, const point &b){
   lf ans = 0.0;
   rep(i , 0 ,2){
-    lf aux = a.x[i]-b.x[i];
-    ans += aux*1ll*aux;
+    ans+=pow( a.x[i]-b.x[i], 2.0);
   }
   return ans;
 }
 void findNearest( point &to, knode *root, lf &ans, point &nans, int d){
   if( root == nullptr) return;
-//  root->p.show();
   lf dis = dist( to, root->p);
   if( to.id != root->p.id && dis < ans){
     ans =dis;
