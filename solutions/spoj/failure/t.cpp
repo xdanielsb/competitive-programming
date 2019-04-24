@@ -18,7 +18,7 @@ typedef pair<int, int> ii;
 typedef vector<int> vi;
 const int MAXN = 1e5 + 17;
 struct pt{
-  ll x[2];
+  int x[2];
 };
 
 pt point[MAXN], cop[MAXN];
@@ -32,10 +32,6 @@ struct node{
    node(int _d){
     d = _d;
    }
-   void show(){
-     cout << p.x[0]<<" "<< p.x[1]<<endl;
-   }
-
 };
 
 bool cmp1( const pt &a , const pt &b){
@@ -45,7 +41,7 @@ bool cmp2( const pt &a, const pt &b){
   return a.x[1] < b.x[1];
 }
 ll dist( const pt &a, const pt &b){
-  auto pow2= [](ll x1) {return x1*1ll*x1;};
+  auto pow2= [](int x1) {return x1*1ll*x1;};
   ll ans=.0;
   rep( i,0, 2) ans += pow2( a.x[i]-b.x[i]);
   return ans;
