@@ -28,7 +28,6 @@ int main(){
    for( int i =2; i<=n; i++){
      if( check[i]) continue;
      for( int j = i; j<=n;j+=i){
-      // debug1(j);
        check[j] = true;
        A[j] = cnt;
      }

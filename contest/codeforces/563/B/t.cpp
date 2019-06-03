@@ -23,9 +23,13 @@ int main(){
 #endif
   int n;
   while( cin >>n){
-    int odd =0;
-    vi A(n); rep(i, 0, n) cin >>A[i] , odd+=A[i]%2;
-    if( odd != 0 || odd != n) sort(A.begin(),A.end());
+    int odd =0, even =0;
+    vi A(n); rep(i, 0, n) {
+      cin >>A[i];
+      if(A[i]%2) odd++;
+      else even++;
+    }
+    if( odd  && even) sort(A.begin(),A.end());
     for( int x: A) cout << x << " "; cout <<endl;
   }
   return 0;

@@ -27,23 +27,11 @@ int main(){
     sort( A.begin(),A.end());
     int l = 0, r = 2*n-1;
     ll s1=0, s2=0;
-    for( int i =0; i < n; i++){
-      s1+=A[i];
-    }
-    for( int j = n; j<2*n; j++){
-      s2 +=A[j];
-    }
-    if( s1!=s2){
-      for( int x: A){
-        cout << x <<" ";
-      }
-      cout <<endl;
-    }else{
-      cout <<-1<<endl;
-    }
-
+    for( int i =0; i < n; i++)  s1+=A[i];
+    for( int j = n; j<2*n; j++)  s2 +=A[j];
+    if( s1!=s2)for( int x: A)cout << x <<" ";
+    else cout <<-1;
+    cout <<endl;
   }
-
-
   return 0;
 }
