@@ -8,6 +8,8 @@
 #define size( x )   int( ( x ).size( ) )
 #define endl '\n'
 #define rep(i, a, b) for( __typeof(a) i =(a); i<(b);i++)
+#define rept(i, a, b) for( __typeof(a) i =(a); i<=(b);i++)
+#define all(x) x.begin(),x.end()
 
 using namespace std;
 typedef long long ll;
