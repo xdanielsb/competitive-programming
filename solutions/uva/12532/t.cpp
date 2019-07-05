@@ -23,22 +23,22 @@ ll Tree[MAXN];
 int n, q;
 void build(){
   for( int i= n-1; i > 0; i--){
-    Tree[i] = Tree[i<<1]*Tree[i<<1|1];
+    Tree[i] = Tree[i<<1]*1ll*Tree[i<<1|1];
   }
 }
 void update( int x, int y){
   x+=n;
   Tree[x] =y;
   for( ; x  > 1; x >>=1){
-    Tree[x >> 1] = Tree[x] * Tree[x ^1];
+    Tree[x >> 1] = Tree[x] *1ll* Tree[x ^1];
   }
 }
 
 ll query( int l, int r){
   ll res =1ll;
   for( l+=n,r+=n; l <r ; l >>=1, r>>=1){
-    if( l & 1 ) res *= Tree[l++];
-    if( r & 1) res *= Tree[--r];
+    if( l & 1 ) res = res *1ll*Tree[l++];
+    if( r & 1) res = res *1ll*Tree[--r];
   }
   return res;
 }
@@ -52,7 +52,11 @@ int main(){
   int l, r; char opt;
   while( cin >> n>> q){
     rep(i, 0, MAXN) Tree[i]= 1ll;
-    rep(i, 0, n) cin >> Tree[i+n];
+    rep(i, 0, n){
+      cin >> Tree[i+n];
+      if( Tree[i+n] >0 ) Tree[i+n] = 1;
+      if( Tree[i+n] <0 ) Tree[i+n] = -1;
+    }
     build(  );
     
     rep(i, 0, q){
@@ -61,6 +65,8 @@ int main(){
       /* rep(i, 0, n) cout << Tree[i+n] << "\t"; */
       /* cout <<endl; */
       if( opt == 'C'){
+        if( r > 0 ) r = 1;
+        else if( r < 0) r =-1;
         update(l-1, r);
       }else{
         ll ans = query( l-1, r );
