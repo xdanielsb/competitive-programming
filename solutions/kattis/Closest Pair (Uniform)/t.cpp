@@ -20,7 +20,7 @@ typedef vector<int> vi;
 
 
 const lf EPS = 1e-9;
-
+const int INF = ~(1<<31);
 
 struct point{
   int id;
@@ -34,10 +34,7 @@ struct knode{
   point p;
   int id;
   knode *l, *r;
-  int d;
-  int val;
-  knode(int _d) {
-    d = _d;
+  knode() {
     l = nullptr;
     r = nullptr;
   }
@@ -59,17 +56,37 @@ struct cmp{
   }
 };
 
+
+struct bb {
+  point from, to;
+  bb(point _from, point _to) : from(_from), to(_to) {}
+  lf dist(const point &p) {
+    lf sum = 0.0;
+    rep(i,0,2) {
+      if (p.x[i] < from.x[i])
+        sum += pow(from.x[i] - p.x[i], 2.0);
+      else if (p.x[i] > to.x[i])
+        sum += pow(p.x[i] - to.x[i], 2.0);
+    }
+    return sum;
+  }
+  bb bound(lf l, int c, bool left) {
+    point nf(from.x), nt(to.x);
+    if (left) nt.x[c] = min(nt.x[c], l);
+    else nf.x[c] = max(nf.x[c], l);
+    return bb(nf, nt);
+  }
+};
+
 knode* build( vector<point> &A,int l, int r, int d){
-  knode *root = new knode( d );
+  knode *root = new knode();
   if( l >= r ){
     root->p = A[l];
     return root;
   }
   int mid = r + (l-r)/2;
   nth_element(A.begin()+l, A.begin()+mid,A.begin()+r+1, cmp(d));
-  root->val = A[mid].x[d];
   root->p = A[mid];
-  root->d = d;
   root->l = build( A, l, mid-1, d^1);
   root->r =  build( A, mid+1, r, d^1);
   return root;
@@ -77,21 +94,19 @@ knode* build( vector<point> &A,int l, int r, int d){
 
 inline lf dist( const point &a, const point &b){
   lf ans = 0.0;
-  rep(i , 0 ,2){
-    ans+=pow( a.x[i]-b.x[i], 2.0);
-  }
+  rep(i , 0 ,2)
+    ans += pow( a.x[i]-b.x[i], 2.0);
   return ans;
 }
-void findNearest( point &to, knode *root, lf &ans, point &nans, int d){
+void findNearest( point &to, knode *root, bb b, lf &ans, point &nans, int d){
   if( root == nullptr) return;
   lf dis = dist( to, root->p);
   if( to.id != root->p.id && dis < ans){
-    ans =dis;
+    ans = dis;
     nans = root->p;
   }
-  lf delta= to.x[d] - root->val;
-  delta = delta * 1ll * delta;
-  if( to.x[d] > root->val){
+  lf delta= pow(to.x[d] - root->p.x[d], 2.0);
+  if( to.x[d] > root->p.x[d]){
     findNearest( to, root->r, ans, nans, d^1);
     if( ans >= delta )  findNearest( to, root->l, ans, nans, d^1);
   }else{
@@ -124,6 +139,8 @@ int main(){
     lf ans= LONG_LONG_MAX,aux;
     for( int i= 0; i < n; i++){
       aux= LONG_LONG_MAX;
+      
+      bb b(from, to);
       findNearest(pts[i], root, aux, naux, 0);
       if(aux < ans){
         ans = aux;

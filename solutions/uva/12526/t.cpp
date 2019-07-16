@@ -47,7 +47,7 @@ int query( node *r, string &s, int i){
   }
   int ans = 0;
   int x = s[ i] - 'a';
-  if( r->nsons > 1 && i || (r->isend && (i+1)<=size(s))){
+  if( r->nsons > 1 && i || (r->isend && i < size(s))){
     ans = 1 + query( r->son[x], s, i+1);
   }else{
     ans = query( r->son[x], s, i+1);
