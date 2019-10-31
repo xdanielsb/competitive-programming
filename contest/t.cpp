@@ -20,7 +20,8 @@ int main(){
   ios::sync_with_stdio( false );
   cin.tie( nullptr );
 #ifdef LOCAL
-  freopen("in", "r" , stdin);
+  if(!freopen("in", "r" , stdin)) 
+    cerr << "no file..."<<endl;
 #endif
  
   

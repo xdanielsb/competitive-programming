@@ -1,6 +1,4 @@
 run:
-	g++ -DLOCAL -std=c++17 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG t.cpp
+	g++ -DLOCAL -std=c++17 -Wshadow -Wall -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG -O2 -g t.cpp	&& ./a.out
 fast:
-	g++ -DLOCAL -std=c++17  t.cpp 
-test:
-	./a.out < in
+	g++ -DLOCAL -std=c++17  t.cpp  && ./a.out
