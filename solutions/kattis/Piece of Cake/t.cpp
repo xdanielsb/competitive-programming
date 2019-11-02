@@ -20,9 +20,15 @@ int main(){
   ios::sync_with_stdio( false );
   cin.tie( nullptr );
 #ifdef LOCAL
-  if(!freopen("in", "r" , stdin)) 
-    cerr << "no file..."<<endl;
+  freopen("in", "r" , stdin);
 #endif
+  int n, h,v;
+  while( cin >> n >> h>> v){
+    ll ans = max(n-h, h) * max( n-v, v) * 4ll;
+    cout << ans <<endl;
+  }
+  
+  
   
   
   return 0;
