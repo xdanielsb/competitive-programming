@@ -1,4 +1,5 @@
 in
+Makefile
 *.out.dSYM
 a.out.dSYM/
 *.swp
