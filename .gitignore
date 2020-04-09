@@ -4,3 +4,4 @@ Makefile
 a.out.dSYM/
 *.swp
 *.out
+*.exe
