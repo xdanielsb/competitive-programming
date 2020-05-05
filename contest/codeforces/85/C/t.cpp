@@ -13,7 +13,7 @@
 
 using namespace std;
 typedef long long ll;
-typedef pair<int, int> ii;
+typedef pair<ll, ll> ii;
 typedef vector<int> vi;
 typedef pair< pair<int, int>, int> iii;
 int main(){
@@ -25,25 +25,19 @@ int main(){
 #endif
   int t;cin >>t;
   while(t--){
-    int n; ll ans =0;
-    cin >>n ; vector<ii > A(n);
-    rep(i, 0, n) cin >>A[i].F >> A[i].S;
-    int pos=0, best = INT_MAX;
-    rep(i,0, n){
-      ll points = A[i].F - max(0,(A[i].F-A[(i-1+n)%n].S));
-      /* debug2(A[i].F, points); */
-      if( best > points){
-        pos = i;
-        best = points;
-      }
-    }
+    int n;cin >>n;
+    vector< ii > h(n);
+    for( ii &e: h) cin >> e.F >> e.S;
+    ll ans = 0, mn = numeric_limits<ll>::max();
     rep(i, 0, n){
-      int p = (i+pos)%n;
-      int np = (i+pos+1)%n;
-      A[np].F = max(0,A[np].F - A[p].S);
-      ans += A[p].F;
+      int li = (i+n-1) % n;
+      ans += h[i].F - min(h[i].F, h[li].S);
+      mn = min(mn, min(h[i].F, h[li].S));
     }
-    cout << ans <<endl;
+    /* debug2(ans, mn); */
+    cout << (ans+mn) << endl;
+
+
   }
 
   return 0;
