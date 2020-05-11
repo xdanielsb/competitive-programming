@@ -23,20 +23,43 @@ ll res[maxn];
 // this is the recursion
 // just for testing
 // learned: clean the memo once used
-void count( int pos, int num=0, int lst=0, int cnt=1){
+// this recursion does not work, because
+// doesn count all blockes ejm.
+// idea: is to take in paper block of size n, for example
+// n = 3
+// X??
+// ?X?
+// ??X
+// and count in this type of block how many there are you will guess a pattern
+// the count will be
+// n =4 ans ={34200 2610 180 10}
+void count( int pos,int lst=0, int cnt=0){
+
   if(pos == n){
     ans[cnt]++;
     return;
   }
   rep(i, 0, 10){
     if(pos && i == lst){
-      count(pos+1,num*10+i, i, cnt+1);
+      count(pos+1, i, cnt+1);
     }else{
-      if(pos>0)ans[cnt]++;
-      if( lst==-1) lst=0;
-      count(pos+1, num*10+i, i, 1);
+      ans[cnt]++;
+      count(pos+1, i, 1);
     }
   }
+}
+
+ll powm( ll b, ll e){
+  ll ans = 1;
+  while( e > 0){
+    if( e & 1){
+      ans = (ans * b) %mod;
+      e--;
+    }
+    b = (b *1ll* b )%mod;
+    e = e /2;
+  }
+  return ans;
 }
 
 
@@ -48,14 +71,13 @@ int main(){
 #endif
 
   while(cin >>n){
-    res[0] = 10;
-    res[1] = 180;
-    rep(i, 2, n+1)
-      res[i] = (res[i-1] * 10 ) % mod;
-
-    rep(i, 0, n)
-      cout << res[n-i-1] << " "[i==n-1];
-    cout <<endl;
+    ll res;
+    rep(i, 1, n){
+      res = 18ll * powm(10ll, n-i)%mod;
+      res = (res + (n-i-1)*81ll * powm(10ll, n-i-1))%mod;
+      cout << res << " ";
+    }
+    cout <<10 << endl;
   }
 
 
