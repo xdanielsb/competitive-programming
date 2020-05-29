@@ -17,6 +17,11 @@ typedef pair<int, int> ii;
 typedef vector<int> vi;
 typedef vector<string> vs;
 
+/*
+ * - an space is always less than any lettr be upper or lower case
+ *
+ *
+ * */
 vs split(string line, char d){
   vs el;
   stringstream ss(line);
