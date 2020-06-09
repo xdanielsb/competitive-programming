@@ -35,38 +35,31 @@ int main(){
       }
     }
     memset(dp, 0x3f3f3f, sizeof(dp));
-    memset(dp2, 0x3f3f3f, sizeof(dp2));
 
 
     dp[1][0] = 0;
     for( int r = 1; r <=n; r++){
       for( int c = 1; c<=m ; c++){
         dp[r][c] = min(dp[r-1][c], dp[r][c-1]) + ma[r][c];
-        cout << dp[r][c] << " " ;
       }
-      cout <<endl;
     }
     cout << dp[n][m] << endl;
 
 
+    memset(dp2, 0x3f, sizeof(dp2));
+    // take care with  dp[1][0] you cannot do that here, because your dp2 memo will
+    // fail, instead you need to check for that condition inside
+    // fails because r&1 will reuse that initial value, after the first usage that should be
+    // set to big value
     for( int r = 1; r <=n; r++){
       for( int c = 1; c<=m ; c++){
-        if( r == 1 && c == 1){
-          dp2[r&1][c] = ma[r][c];
-        }
-        else if( r==1){
-          dp2[r&1][c] = ma[r][c] + dp2[r&1][c-1];
-        }else if( c==1){
-          dp2[r&1][c] = ma[r][c] + dp2[(r-1)&1][c];
-        }else{
+        if( r == 1 && c ==1)
+          dp2[r][c] = ma[r][c];
+        else
           dp2[r&1][c] = min(dp2[(r-1)&1][c], dp2[r&1][c-1]) + ma[r][c];
-        }
-        cout << dp2[r&1][c] << " ";
       }
-      cout << endl ;
     }
-    assert( dp[n][m] == dp2[n&1][m]);
-
+    cout <<dp2[n&1][m] <<endl;
   }
 
 
