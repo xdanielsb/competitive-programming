@@ -16,6 +16,19 @@ typedef long long ll;
 typedef pair<int, int> ii;
 typedef vector<int> vi;
 
+
+int find( string s, int on){
+  int n = size(s);
+  int ans = INT_MAX;
+  int acum = 0;
+  for( int i = 0; i < n; i++){
+    acum += s[i] == '0';
+    on -= s[i] == '1';
+    ans = min(ans,acum+on);
+  }
+  return ans;
+}
+
 int main(){
   ios::sync_with_stdio( false );
   cin.tie( nullptr );
@@ -23,27 +36,20 @@ int main(){
   if(!freopen("in", "r" , stdin))
     cerr << "no file..."<<endl;
 #endif
-
-
   int t;
+  string s;
   cin >> t;
-  while( t--){
-    int n, x, a;
-    cin >> n >> x;
-    int nodds = 0, neven = 0;
-    for( int i = 0; i < n ; i++){
-      cin >> a;
-      if(a % 2) nodds++;
-      else neven++;
-    }
-    nodds = min(nodds, x);
-    if(nodds % 2 == 0 ) nodds--;
-    if(nodds <= 0 || (nodds + neven < x )){
-      cout << "No\n";
-      continue;
-    }
+  while(t--){
+    cin >> s;
+    int on = 0;
+    for( int i = 0; i < size(s); i++) on +=s[i] == '1';
+    int ans = min( on, size(s)-on);
+    ans = min(ans,find( s, on));
+    reverse(all(s));
+    ans = min( ans, find(s, on));
+    cout << ans <<endl;
 
-    cout << "Yes\n";
   }
+
   return 0;
 }
