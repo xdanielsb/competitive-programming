@@ -31,35 +31,15 @@ int main(){
     cin >> n >> k;
     vector< int > pos;
     char x;
+    pos.push_back(-k-1);
     for( int i = 0; i  < n; i++){
       cin >> x;
       if( x == '1') pos.push_back( i );
     }
-    if( size(pos) == 0){
-      cout << ((n+k)/(k+1)) <<endl;
-      continue;
-    }
+    pos.push_back(n+k);
     int ans = 0;
-    //beginning of string
-    if( pos[0]-k > 0){
-      int len = pos[0] - 1 - k;
-      if( len >= 0){
-        ans+= 1+ (len)/(k+1);
-      }
-    }
-    //middle of string
-    for( int i = 1; i < size(pos); i++){
-      int len = pos[i] - pos[i-1] -1 - 2*k;
-      if( len >= 0){
-        ans+= 1+ (len-1)/(k+1);
-      }
-    }
-    //end of string
-    if( pos.back() != n-1){
-      int len = n - 1- pos.back() - k -1;
-      if( len >= 0){
-        ans+= 1+ (len)/(k+1);
-      }
+    for( int i =1; i < size(pos); i++){
+      ans += max(0, (pos[i] - pos[i-1] -k -1)/(k+1));
     }
     cout << ans <<endl;
   }
