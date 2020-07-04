@@ -16,6 +16,10 @@ typedef long long ll;
 typedef pair<int, int> ii;
 typedef vector<int> vi;
 
+ll gauss( ll x){
+  return x * 1ll * (x + 1 ) / 2ll;
+}
+
 int main(){
   ios::sync_with_stdio( false );
   cin.tie( nullptr );
@@ -23,13 +27,17 @@ int main(){
   if(!freopen("in", "r" , stdin)) 
     cerr << "no file..."<<endl;
 #endif
+
   int t;
-  cin >> t;
+  cin >>t;
   while(t--){
-    int n;
-    cin >> n;
-    cout << (n/2 + n%2) <<endl;
+    ll n, r;
+    cin >> n >> r;
+    ll x = min(n-1, r);
+    ll ans = gauss(x) +(n <= r);
+    cout << ans <<endl;
   }
+  
   
   return 0;
 }

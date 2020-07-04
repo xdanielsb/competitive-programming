@@ -25,10 +25,37 @@ int main(){
 #endif
   int t;
   cin >> t;
-  while(t--){
-    int n;
-    cin >> n;
-    cout << (n/2 + n%2) <<endl;
+  ll v, c, t1, t2;
+  while(cin >> v >> c >> t1 >> t2){
+    /* cout <<endl;cout << v << " " << c << " " << t1 << " " << t2 <<endl; */
+    if ( v + c < t1 + t2 ){
+      cout << "No\n";
+      continue;
+    }
+    if( min(v, c) >= t2){
+      cout << "Yes\n";
+      continue;
+    }
+    ll diff = abs(v-c);
+    if( t1 < diff ){
+      cout << "No\n";
+      continue;
+    }
+    t1 -= diff;
+    if( v >=c){
+      v-= diff;
+    }else{
+      c-= diff;
+    }
+
+    ll mn = min(t1, t2);
+    v-= mn;
+    c-= mn;
+    if( min( v, c) < t2){
+      cout <<"No\n";
+    }else{
+      cout <<"Yes\n";
+    }
   }
   
   return 0;
