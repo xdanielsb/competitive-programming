@@ -16,11 +16,6 @@ typedef long long ll;
 typedef pair<int, int> ii;
 typedef vector<int> vi;
 
-const int maxn = 1e5;
-int depth[maxn];
-int inc[maxn];
-int n, k, l;
-
 int main(){
   ios::sync_with_stdio( false );
   cin.tie( nullptr );
@@ -30,17 +25,29 @@ int main(){
   int t;
   cin >> t;
   while(t--){
+    int n, k, l;
     cin >> n >> k >> l;
-    vector< int > depth(n);
-    d3(n, k, l);
-    for( int i = 0; i < n ; ++i){
+    vector< int > depth(n+1);
+    vector< int > safe;
+    safe.push_back(0);
+    for( int i = 1; i <= n; i++){
       cin >> depth[i];
-      inc[i] = l - depth[i];
-      cout << inc[i] << " ";
+      if( depth[i] + k <= l) safe.push_back( i );
     }
-    cout <<endl;
+    safe.push_back(n+1);
     bool ok = true;
-    int lst = 0;
+    for( int i = 1; i < size(safe) && ok; i++){
+      int tide = k; bool down = true;
+      for( int j = safe[i-1] + 1; j < safe[i]; ++j){
+        tide += down ? -1 :  1;
+        if( down ) tide -= max(0, depth[j] + tide - l);
+        if( tide < 0 || depth[j] + tide > l){
+          ok = false;
+          break;
+        }
+        if( tide == 0 ) down = false;
+      }
+    }
     printf(ok?"Yes\n":"No\n");
   }
   return 0;
