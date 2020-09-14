@@ -39,7 +39,7 @@ vector< int > getHeightHigherBuilding(const vector< int> & h){
   vector< int > ans(n);
   stack<int> s;
   for( int i = n-1; i>=0; i--){
-    while( !s.empty() && s.top() < h[i]){
+    while( !s.empty() && s.top() <= h[i]){
       s.pop();
     }
     if(s.empty()){
@@ -53,7 +53,7 @@ vector< int > getHeightHigherBuilding(const vector< int> & h){
 }
 
 int main(){
-  vector< int> h = { 30 , 3 , 4, 1 , 5, 7, 8, 1, 2 , 1};
+  vector< int> h = { 30 , 3 , 4, 1 , 5, 7, 8, 1, 2 , 1, 3, 3};
   vector< int> ans = getHeightHigherBuilding( h);
   for( int i = 0; i < ans.size(); i++)
     cout << ans[i] << " ";

@@ -3,7 +3,8 @@ using namespace std;
 
 /*
  Given a reference to a node that belongs to a linked list, 
- remove it from the linked list. Assume that each node has the following structure
+ remove it from the linked list. 
+ Assume that each node has the following structure
 */ 
 
 struct node{
